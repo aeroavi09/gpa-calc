@@ -9,6 +9,7 @@ function createDiv() {
     newDiv.className = "addedCourses";
     newDiv.innerHTML = `
     <p>Course ${courseNumber}</p>
+    <button class="deleteButton" onclick="deleteCourse(${courseNumber})">x</button>
     <label for="grade${courseNumber}">Select Grade:</label>
     <select id="grade${courseNumber}" onchange="updateGPA()">
         <option value="A">A</option>
@@ -24,11 +25,32 @@ function createDiv() {
         <option value="Accelerated">Accelerated</option>
         <option value="Honors/AP">Honors/AP</option>
     </select>
-    <button onclick="deleteCourse(${courseNumber})">Delete Course</button>
     <hr>
     <center>
     <label id="gradeNum${courseNumber}">4.00</label>
     </center>`;
+
+    // Append the new div to the body
+    document.getElementById('holder').appendChild(newDiv);
+    
+    // Update GPA immediately after adding a new course
+    updateGPA();
+}
+
+function deleteCourse(courseNum) {
+    // Remove the course div
+    var courseDiv = document.getElementById(`gradeNum${courseNum}`).parentNode.parentNode;
+    courseDiv.parentNode.removeChild(courseDiv);
+
+    // Update GPA after deleting a course
+    updateGPA();
+}
+
+// Rest of the code...
+
+// Initial GPA update
+updateGPA();
+
 
     // Append the new div to the body
     document.getElementById('holder').appendChild(newDiv);
