@@ -22,12 +22,26 @@ function createDiv() {
     <select id="type${courseNumber}" onchange="updateGPA()">
         <option value="Normal">Normal</option>
         <option value="Accelerated">Accelerated</option>
-        <option value="AP">AP</option>
+        <option value="Honors/AP">Honors/AP</option>
     </select>
+    <button onclick="deleteCourse(${courseNumber})">Delete Course</button>
     <hr>
     <center>
     <label id="gradeNum${courseNumber}">4.00</label>
     </center>`;
+
+    // Append the new div to the body
+    document.getElementById('holder').appendChild(newDiv);
+    
+    // Update GPA immediately after adding a new course
+    updateGPA();
+}
+
+function deleteCourse(courseNum) {
+    // Remove the course div
+    var courseDiv = document.getElementById(`gradeNum${courseNum}`).parentNode.parentNode;
+    courseDiv.parentNode.removeChild(courseDiv);
+
     
     // Append the new div to the body
     document.getElementById('holder').appendChild(newDiv);
