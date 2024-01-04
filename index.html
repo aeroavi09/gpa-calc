@@ -15,8 +15,16 @@
         <h1 style="color: #723e31;">GPA Calculator</h1>
         <button id="addButton" onclick="createDiv()" style="background-color: #d9b18e; color: #fff;">Create Course</button>
         <hr>
-        <h3 id="gpa" style="color: #723e31;">GPA:</h3>
-        <h1 id="calculated" style="color: #723e31;">N/A</h1>
+        <div class="gpa-container">
+            <div class="gpa" id="gpa-weighted">
+                <h3 style="color: #723e31;">Weighted GPA:</h3>
+                <h1 id="calculated" style="color: #723e31;">N/A</h1>
+            </div>
+            <div class="gpa" id="gpa-unweighted">
+                <h3 style="color: #723e31;">Unweighted GPA:</h3>
+                <h1 id="calculated-unweighted" style="color: #723e31;">N/A</h1>
+            </div>
+        </div>
     </div>
 
     <div class="container mt-5">
@@ -26,5 +34,3 @@
     <script src="main.js"></script>
 </body>
 </html>
-
-
