@@ -41,7 +41,7 @@ function deleteCourse(courseNum) {
     // Remove the course div
     var courseDiv = document.getElementById(`gradeNum${courseNum}`).parentNode.parentNode;
     courseDiv.parentNode.removeChild(courseDiv);
-
+    courseNumber -= 1   
     // Update GPA after deleting a course
     updateGPA();
 }
