@@ -1,3 +1,39 @@
+courseNumber = 0;
+
+function createDiv() {
+    document.getElementById('calculated').innerText = `4.00`;
+    courseNumber += 1;
+    // Create a new div element
+    var newDiv = document.createElement("div");
+
+    // Set some attributes for the div (you can customize these)
+    newDiv.className = "addedCourses";
+    newDiv.innerHTML = `
+    <p>Course ${courseNumber}</p>
+    <label for="grade${courseNumber}">Select Grade:</label>
+    <select id="grade${courseNumber}" onchange="updateGPA()">
+        <option value="A">A</option>
+        <option value="B">B</option>
+        <option value="C">C</option>
+        <option value="D">D</option>
+        <option value="F">F</option>
+    </select>
+    
+    <label for="type${courseNumber}">Select Type:</label>
+    <select id="type${courseNumber}" onchange="updateGPA()">
+        <option value="Normal">Normal</option>
+        <option value="Accelerated">Accelerated</option>
+        <option value="Honors/AP">Honors/AP</option>
+    </select>
+    <hr>
+    <center>
+    <label id="gradeNum${courseNumber}">4.00</label>
+    </center>`;
+    
+    // Append the new div to the body
+    document.getElementById('holder').appendChild(newDiv);
+}
+
 function updateGPA() {
     // Loop through all created courses
     let totalGPA = 0;
