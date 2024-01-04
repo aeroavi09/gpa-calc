@@ -1,7 +1,6 @@
 courseNumber = 0;
 
 function createDiv() {
-    document.getElementById('calculated').innerText = `4.00`;
     courseNumber += 1;
     // Create a new div element
     var newDiv = document.createElement("div");
@@ -23,7 +22,7 @@ function createDiv() {
     <select id="type${courseNumber}" onchange="updateGPA()">
         <option value="Normal">Normal</option>
         <option value="Accelerated">Accelerated</option>
-        <option value="Honors/AP">Honors/AP</option>
+        <option value="AP">AP</option>
     </select>
     <hr>
     <center>
@@ -32,61 +31,47 @@ function createDiv() {
     
     // Append the new div to the body
     document.getElementById('holder').appendChild(newDiv);
+
+    // Update GPA immediately after adding a new course
+    updateGPA();
 }
 
 function updateGPA() {
-    // Loop through all created courses
-    let totalGPA = 0;
-    let totalUnweightedGPA = 0; // Add a variable for unweighted GPA
-
-    for (let i = 1; i <= courseNumber; i++) {
-        // Get the selected grade and type
-        const grade = document.getElementById(`grade${i}`).value;
-        const type = document.getElementById(`type${i}`).value;
-
-        // Calculate the GPA value based on the grade
-        let gpaValue;
-        switch (grade) {
-            case 'A':
-                gpaValue = 4.00;
-                break;
-            case 'B':
-                gpaValue = 3.00;
-                break;
-            case 'C':
-                gpaValue = 2.00;
-                break;
-            case 'D':
-                gpaValue = 1.00;
-                break;
-            case 'F':
-                gpaValue = 0.00;
-                break;
-            default:
-                gpaValue = 0.00;
-        }
-
-        // Adjust GPA based on course type
-        if (type === 'Accelerated') {
-            gpaValue += 0.5;
-        } else if (type === 'Honors/AP') {
-            gpaValue += 1.0;
-        }
-
-        // Update the label with the calculated GPA value
-        document.getElementById(`gradeNum${i}`).innerText = `${gpaValue.toFixed(2)}`;
-        totalGPA += gpaValue;
-
-        // For unweighted GPA, simply add the GPA value
-        totalUnweightedGPA += gpaValue;
-    }
-
-    // Calculate the overall GPA
-    const overallGPA = totalGPA / courseNumber;
-    const overallUnweightedGPA = totalUnweightedGPA / courseNumber;
-
-    // Update the "calculated" label with the overall GPA
-    document.getElementById('calculated').innerText = `${overallGPA.toFixed(2)}`;
-    document.getElementById('calculated-unweighted').innerText = `${overallUnweightedGPA.toFixed(2)}`;
+    document.getElementById('calculated').innerText = calculateWeightedGPA();
+    document.getElementById('calculated-unweighted').innerText = calculateUnweightedGPA();
 }
 
+function calculateWeightedGPA() {
+    let weightedGPA = 0.0;
+
+    for (let i = 1; i <= courseNumber; i++) {
+        let grade = document.getElementById(`grade${i}`).value;
+        let type = document.getElementById(`type${i}`).value;
+
+        if (type === 'AP') {
+            weightedGPA += (grade === 'A' ? 5.0 : (grade === 'B' ? 4.0 : (grade === 'C' ? 3.0 : (grade === 'D' ? 1.0 : 0.0))));
+        } else if (type === 'Accelerated') {
+            weightedGPA += (grade === 'A' ? 4.5 : (grade === 'B' ? 3.5 : (grade === 'C' ? 2.5 : (grade === 'D' ? 1.0 : 0.0))));
+        } else {
+            weightedGPA += (grade === 'A' ? 4.0 : (grade === 'B' ? 3.0 : (grade === 'C' ? 2.0 : (grade === 'D' ? 1.0 : 0.0))));
+        }
+    }
+
+    weightedGPA /= courseNumber;
+
+    return weightedGPA.toFixed(2);
+}
+
+function calculateUnweightedGPA() {
+    let unweightedGPA = 0.0;
+
+    for (let i = 1; i <= courseNumber; i++) {
+        let grade = document.getElementById(`grade${i}`).value;
+
+        unweightedGPA += (grade === 'A' ? 4.0 : (grade === 'B' ? 3.0 : (grade === 'C' ? 2.0 : (grade === 'D' ? 1.0 : 0.0))));
+    }
+
+    unweightedGPA /= courseNumber;
+
+    return unweightedGPA.toFixed(2);
+}
