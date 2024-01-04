@@ -1,7 +1,7 @@
 function updateGPA() {
     // Loop through all created courses
-    let totalGPAWeighted = 0;
-    let totalGPAUnweighted = 0;
+    let totalGPA = 0;
+    let totalUnweightedGPA = 0; // Add a variable for unweighted GPA
 
     for (let i = 1; i <= courseNumber; i++) {
         // Get the selected grade and type
@@ -37,17 +37,19 @@ function updateGPA() {
             gpaValue += 1.0;
         }
 
-        // Update the label with the calculated GPA value for both weighted and unweighted
+        // Update the label with the calculated GPA value
         document.getElementById(`gradeNum${i}`).innerText = `${gpaValue.toFixed(2)}`;
-        totalGPAWeighted += gpaValue;
-        totalGPAUnweighted += +grade === 4.00 ? 4.00 : gpaValue;
+        totalGPA += gpaValue;
+
+        // For unweighted GPA, simply add the GPA value
+        totalUnweightedGPA += gpaValue;
     }
 
-    // Calculate the overall GPAs
-    const overallGPAWeighted = totalGPAWeighted / courseNumber;
-    const overallGPAUnweighted = totalGPAUnweighted / courseNumber;
+    // Calculate the overall GPA
+    const overallGPA = totalGPA / courseNumber;
+    const overallUnweightedGPA = totalUnweightedGPA / courseNumber;
 
-    // Update the "calculated" labels with the overall GPAs
-    document.getElementById('calculated').innerText = `${overallGPAWeighted.toFixed(2)}`;
-    document.getElementById('calculated-unweighted').innerText = `${overallGPAUnweighted.toFixed(2)}`;
+    // Update the "calculated" label with the overall GPA
+    document.getElementById('calculated').innerText = `${overallGPA.toFixed(2)}`;
+    document.getElementById('calculated-unweighted').innerText = `${overallUnweightedGPA.toFixed(2)}`;
 }
