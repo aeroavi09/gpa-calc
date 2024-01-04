@@ -33,7 +33,6 @@ function createDiv() {
     // Append the new div to the body
     document.getElementById('holder').appendChild(newDiv);
 }
-
 function updateGPA() {
     // Loop through all created courses
     let totalGPA = 0;
