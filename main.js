@@ -1,42 +1,8 @@
-courseNumber = 0;
-
-function createDiv() {
-    document.getElementById('calculated').innerText = `4.00`;
-    courseNumber += 1;
-    // Create a new div element
-    var newDiv = document.createElement("div");
-
-    // Set some attributes for the div (you can customize these)
-    newDiv.className = "addedCourses";
-    newDiv.innerHTML = `
-    <p>Course ${courseNumber}</p>
-    <label for="grade${courseNumber}">Select Grade:</label>
-    <select id="grade${courseNumber}" onchange="updateGPA()">
-        <option value="A">A</option>
-        <option value="B">B</option>
-        <option value="C">C</option>
-        <option value="D">D</option>
-        <option value="F">F</option>
-    </select>
-    
-    <label for="type${courseNumber}">Select Type:</label>
-    <select id="type${courseNumber}" onchange="updateGPA()">
-        <option value="Normal">Normal</option>
-        <option value="Accelerated">Accelerated</option>
-        <option value="Honors/AP">Honors/AP</option>
-    </select>
-    <hr>
-    <center>
-    <label id="gradeNum${courseNumber}">4.00</label>
-    </center>`;
-    
-    // Append the new div to the body
-    document.getElementById('holder').appendChild(newDiv);
-}
-
 function updateGPA() {
     // Loop through all created courses
-    let totalGPA = 0;
+    let totalGPAWeighted = 0;
+    let totalGPAUnweighted = 0;
+
     for (let i = 1; i <= courseNumber; i++) {
         // Get the selected grade and type
         const grade = document.getElementById(`grade${i}`).value;
@@ -71,14 +37,17 @@ function updateGPA() {
             gpaValue += 1.0;
         }
 
-        // Update the label with the calculated GPA value
+        // Update the label with the calculated GPA value for both weighted and unweighted
         document.getElementById(`gradeNum${i}`).innerText = `${gpaValue.toFixed(2)}`;
-        totalGPA += gpaValue;
+        totalGPAWeighted += gpaValue;
+        totalGPAUnweighted += +grade === 4.00 ? 4.00 : gpaValue;
     }
 
-    // Calculate the overall GPA
-    const overallGPA = totalGPA / courseNumber;
+    // Calculate the overall GPAs
+    const overallGPAWeighted = totalGPAWeighted / courseNumber;
+    const overallGPAUnweighted = totalGPAUnweighted / courseNumber;
 
-    // Update the "calculated" label with the overall GPA
-    document.getElementById('calculated').innerText = `${overallGPA.toFixed(2)}`;
+    // Update the "calculated" labels with the overall GPAs
+    document.getElementById('calculated').innerText = `${overallGPAWeighted.toFixed(2)}`;
+    document.getElementById('calculated-unweighted').innerText = `${overallGPAUnweighted.toFixed(2)}`;
 }
