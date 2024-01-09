@@ -1,9 +1,9 @@
-courseNumber = 0;
+let courseNumber = 0;
 
 function createDiv() {
     courseNumber += 1;
     // Create a new div element
-    var newDiv = document.createElement("div");
+    const newDiv = document.createElement("div");
 
     // Set some attributes for the div (you can customize these)
     newDiv.className = "addedCourses";
@@ -27,48 +27,22 @@ function createDiv() {
     </select>
     <hr>
     <center>
-    <label id="gradeNum${courseNumber}">4.00</label>
+        <label id="gradeNum${courseNumber}">4.00</label>
     </center>`;
 
     // Append the new div to the body
     document.getElementById('holder').appendChild(newDiv);
-    
+
     // Update GPA immediately after adding a new course
     updateGPA();
 }
 
 function deleteCourse(courseNum) {
     // Remove the course div
-    var courseDiv = document.getElementById(`gradeNum${courseNum}`).parentNode.parentNode;
+    const courseDiv = document.getElementById(`gradeNum${courseNum}`).parentNode.parentNode;
     courseDiv.parentNode.removeChild(courseDiv);
-    courseNumber -= 1   
+
     // Update GPA after deleting a course
-    updateGPA();
-}
-
-// Rest of the code...
-
-// Initial GPA update
-updateGPA();
-
-
-    // Append the new div to the body
-    document.getElementById('holder').appendChild(newDiv);
-    
-    // Update GPA immediately after adding a new course
-    updateGPA();
-}
-
-function deleteCourse(courseNum) {
-    // Remove the course div
-    var courseDiv = document.getElementById(`gradeNum${courseNum}`).parentNode.parentNode;
-    courseDiv.parentNode.removeChild(courseDiv);
-
-    
-    // Append the new div to the body
-    document.getElementById('holder').appendChild(newDiv);
-
-    // Update GPA immediately after adding a new course
     updateGPA();
 }
 
@@ -81,10 +55,10 @@ function calculateWeightedGPA() {
     let weightedGPA = 0.0;
 
     for (let i = 1; i <= courseNumber; i++) {
-        let grade = document.getElementById(`grade${i}`).value;
-        let type = document.getElementById(`type${i}`).value;
+        const grade = document.getElementById(`grade${i}`).value;
+        const type = document.getElementById(`type${i}`).value;
 
-        if (type === 'AP') {
+        if (type === 'Honors/AP') {
             weightedGPA += (grade === 'A' ? 5.0 : (grade === 'B' ? 4.0 : (grade === 'C' ? 3.0 : (grade === 'D' ? 1.0 : 0.0))));
         } else if (type === 'Accelerated') {
             weightedGPA += (grade === 'A' ? 4.5 : (grade === 'B' ? 3.5 : (grade === 'C' ? 2.5 : (grade === 'D' ? 1.0 : 0.0))));
@@ -102,7 +76,7 @@ function calculateUnweightedGPA() {
     let unweightedGPA = 0.0;
 
     for (let i = 1; i <= courseNumber; i++) {
-        let grade = document.getElementById(`grade${i}`).value;
+        const grade = document.getElementById(`grade${i}`).value;
 
         unweightedGPA += (grade === 'A' ? 4.0 : (grade === 'B' ? 3.0 : (grade === 'C' ? 2.0 : (grade === 'D' ? 1.0 : 0.0))));
     }
@@ -111,3 +85,6 @@ function calculateUnweightedGPA() {
 
     return unweightedGPA.toFixed(2);
 }
+
+// Initial GPA update
+updateGPA();
